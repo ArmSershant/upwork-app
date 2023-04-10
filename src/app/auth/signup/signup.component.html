@@ -1,0 +1,135 @@
+<div class="flex flex-col items-center justify-center min-h-screen">
+  <div class="w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6">Sign up</h2>
+    <form
+      class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      #f="ngForm"
+      *ngIf="!isSuccessful"
+      (submit)="f.form.valid && onSubmit(f)"
+    >
+      <div *ngIf="errorMessage" class="text-red-500 text-lg">
+        {{ errorMessage }}
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="username">
+          Username
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          [(ngModel)]="user.username"
+          #username="ngModel"
+          required
+          minlength="3"
+          maxlength="20"
+        />
+        <div
+          *ngIf="username.invalid && (username.dirty || username.touched)"
+          class="text-red-500 text-xs italic"
+        >
+          <div *ngIf="username.errors['required']">Username is required.</div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="email">
+          Email
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Enter your email address"
+          [(ngModel)]="user.email"
+          required
+          #email="ngModel"
+        />
+        <div
+          *ngIf="email.invalid && (email.dirty || email.touched)"
+          class="text-red-500 text-xs italic"
+        >
+          <div *ngIf="email.errors['required']">Email is required.</div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="password">
+          Password
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          name="password"
+          type="password"
+          placeholder="••••••••"
+          [(ngModel)]="user.password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <div
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+          class="text-red-500 text-xs italic"
+        >
+          <div *ngIf="password.errors['required']">Password is required.</div>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="password">
+          Who are you?
+        </label>
+        <select
+          id="roleId"
+          name="roleId"
+          [(ngModel)]="user.roleId"
+          #roleId="ngModel"
+          required
+          class="form-select block w-full py-2 px-3 rounded-lg border-2"
+        >
+          <option [value]="role" *ngFor="let role of roles">
+            {{ role }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-4" *ngIf="user.roleId === 'Freelancer'">
+        <input
+          id="salary"
+          name="salary"
+          type="text"
+          placeholder="Select your salary"
+          #salary="ngModel"
+          [(ngModel)]="user.salary"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        />
+      </div>
+      <div class="mb-4" *ngIf="user.roleId === 'Freelancer'">
+        <textarea
+          class="form-select block w-full py-2 px-3 rounded-lg border-2"
+          name="description"
+          id="description"
+          cols="40"
+          rows="10"
+          placeholder="Write about yourself..."
+          [(ngModel)]="user.description"
+        >
+        </textarea>
+      </div>
+      <div class="flex items-center justify-between">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+        >
+          Sign up
+        </button>
+        <a
+          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          href="/app-login"
+        >
+          Already have an account?
+        </a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div *ngIf="work$ | async as work">
+  <div class="flex items-center rounded-lg px-8 py-6 mb-2">
+    <div class="ml-4">
+      <h3 class="text-lg font-medium text-gray-900">
+        {{ work.title }}
+      </h3>
+      <p class="text-gray-700 mt-2">{{ work.description }}</p>
+      <p class="text-gray-700 mt-2">
+        <strong>Price:</strong> ${{ work.budget }}
+      </p>
+      <p class="text-gray-700 mt-2">
+        <strong>Category:</strong> {{ work.category }}
+      </p>
+    </div>
+  </div>
+</div>

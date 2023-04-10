@@ -1,0 +1,103 @@
+<div *ngIf="user$ | async as user">
+  <div
+    *ngIf="freelancers$ | async as freelancers"
+    class="min-h-screen bg-gray-200"
+  >
+    <div class="max-w-5xl mx-auto py-12">
+      <h2 class="text-2xl font-bold mb-6">Find a Freelancer</h2>
+      <div class="flex items-center mb-4">
+        <form class="w-full max-w-2xl mb-8" (ngSubmit)="onSearch()">
+          <div class="flex items-center mb-4">
+            <label
+              *ngIf="!salaryRange"
+              for="salary"
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              >Salary 0</label
+            >
+            <label
+              *ngIf="salaryRange"
+              for="salary"
+              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              >Salary {{ salaryRange }}</label
+            >
+            <input
+              type="range"
+              id="salary"
+              name="salary"
+              class="w-2/3 rounded-l-lg"
+              min="0"
+              max="5000"
+              step="50"
+              [(ngModel)]="salaryRange"
+            />
+            <button
+              type="submit"
+              class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-r-lg ml-2"
+            >
+              Search
+            </button>
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label
+                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="filter"
+              >
+                Sort by Salary
+              </label>
+              <div class="flex items-center">
+                <input
+                  id="filter"
+                  name="filter"
+                  type="checkbox"
+                  class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+                  [(ngModel)]="isAscending"
+                  (click)="onSelect()"
+                />
+                <label
+                  *ngIf="isAscending"
+                  for="filter"
+                  class="ml-2 block text-gray-900 font-medium text-sm leading-5"
+                >
+                  Descending
+                </label>
+                <label
+                  *ngIf="!isAscending"
+                  for="filter"
+                  class="ml-2 block text-gray-900 font-medium text-sm leading-5"
+                >
+                  Ascending
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Freelancer Card -->
+        <div
+          *ngFor="let freelancer of freelancers"
+          class="bg-white shadow-lg rounded-lg overflow-hidden"
+        >
+          <div class="p-4">
+            <h3 class="text-lg font-medium text-gray-900">
+              {{ freelancer.username }}
+            </h3>
+            <p class="text-gray-700 mt-2">
+              <strong>Rate:</strong> ${{ freelancer.salary }}
+            </p>
+            <p class="text-gray-700 mt-2">
+              <strong>About:</strong> {{freelancer.description}}
+            </p>
+            <div class="mt-4">
+              <button
+                (click)="onHire(freelancer.id, user.id)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Hire Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

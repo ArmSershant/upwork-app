@@ -1,0 +1,94 @@
+<div *ngIf="user$ | async as user" class="min-h-screen bg-gray-200">
+  <div [ngSwitch]="user.roleId">
+    <div *ngSwitchCase="'2'">
+      <div class="max-w-5xl mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-6">All Works</h2>
+        <div *ngFor="let work of displayedWorks" class="grid grid-cols-1 gap-8">
+          <!-- Work Items -->
+          <div
+            class="flex items-center bg-white shadow-lg rounded-lg px-8 py-6 mb-2"
+            [hidden]="work.status == '2' || work.status == '3'"
+          >
+            <div class="ml-4">
+              <h3
+                class="text-lg font-medium text-gray-900 cursor-pointer"
+                routerLink="/app-singlework/{{ work.id }}"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page"
+              >
+                {{ work.title }}
+              </h3>
+              <p class="text-gray-700 mt-2">{{ work.description }}</p>
+              <p class="text-gray-700 mt-2">
+                <strong>Price:</strong> ${{ work.budget }}
+              </p>
+              <p class="text-gray-700 mt-2">
+                <strong>Category:</strong> {{ work.category }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- See More Button -->
+        <div class="flex justify-center mt-8">
+          <button
+            *ngIf="displayedWorks.length < works.length"
+            (click)="loadMore()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            See More
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngSwitchCase="'1'">
+      <div class="max-w-5xl mx-auto py-12">
+        <h2 class="text-2xl font-bold mb-6">All Works</h2>
+        <div *ngFor="let work of displayedWorks" class="grid grid-cols-1 gap-8">
+          <!-- Work Items -->
+          <div
+            class="flex items-center bg-white shadow-lg rounded-lg px-8 py-6 mb-2"
+          >
+            <div class="ml-4" [hidden]="work.status == '2' || work.status == '3'">
+              <h3
+                class="text-lg font-medium text-gray-900 cursor-pointer"
+                routerLink="/app-singlework/{{ work.id }}"
+                routerLinkActive="active"
+                ariaCurrentWhenActive="page"
+              >
+                {{ work.title }}
+              </h3>
+              <p class="text-gray-700 mt-2">{{ work.description }}</p>
+              <p class="text-gray-700 mt-2">
+                <strong>Price:</strong> ${{ work.budget }}
+              </p>
+              <p class="text-gray-700 mt-2">
+                <strong>Category:</strong> {{ work.category }}
+              </p>
+              <button
+                [hidden]="
+                  work.status === '1' ||
+                  work.status === '2' ||
+                  work.status === '3'
+                "
+                (click)="onApply(work, user.id)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded"
+              >
+                Apply job
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- See More Button -->
+        <div class="flex justify-center mt-8">
+          <button
+            *ngIf="displayedWorks.length < works.length"
+            (click)="loadMore()"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            See More
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
